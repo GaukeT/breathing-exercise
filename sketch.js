@@ -25,10 +25,10 @@ function draw() {
   let full = inhale + hold + exhale;
 
   translate(width/2, height/2);
-  push();
-  
   let scaleBy = min(windowWidth, windowHeight) / (200 * 1.5);
   scale(scaleBy);
+  
+  push();
   rotate(-90);  
   noFill();  
  
@@ -120,4 +120,3 @@ function setupButton() {
 function resetSteps() {
   step = -0;
 }
-
