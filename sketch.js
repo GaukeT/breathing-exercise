@@ -12,61 +12,84 @@ function setup() {
 }
 
 function draw() {
-  textSize(12);
-  background(80,80,80)
-  let val = slider.value();
-  noStroke();
-  fill(255);
-  text(val, 130, 23.5);
+  background(80,80,80);
   
-  // ratio 1, 3, 2 
+  // Grep slider value
+  let val = slider.value();
+  drawSliderValue(val);
+  
+  // Calculate ratio (1, 3, 2)
   let inhale = val * 1;
   let hold = val * 3;
   let exhale = val * 2;
-  
   let full = inhale + hold + exhale;
-  
-  let mi = map(inhale, 0, full, 0, 360);
-  let mh = map(hold, 0, full, 0, 360);
-  let me = map(exhale, 0, full, 0, 360);   
 
-  translate(width/2, height/2);  
-  rotate(-90);
+  translate(width/2, height/2);
+  push();
+  rotate(-90);  
+  noFill();  
+ 
+  drawOuterCirkel();
   
-  noFill();
-  strokeWeight(10);
-
-  stroke(255,179,0);
-  arc(0, 0, 220, 220, mi + mh + 1, 359);
-  
-  stroke(67,160,71);
-  arc(0, 0, 220, 220, mi + 1, mi + mh);
-  
-  stroke(30,136,229);
-  arc(0, 0, 220, 220, 1, mi);
-  
-  stroke(255,179,0);
-  arc(0, 0, 220, 220, 359, 360);
-  
+  // Determine next step
   if (step >= full) step = 1;
   else step += 1;
   
-  let mstep = map(step, 0, full, 0, 360);
-  
+  drawInner(step, full, val);
+  pop();
+
+  drawStatus(step, inhale, hold);
+}
+
+function drawStatus(step, inhale, hold) {
+  push();
+  fill(255);
+  textStyle(BOLD);
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  if (step <= inhale) {
+    text('Inhale', 0, 0);
+  } else if (step > inhale && step <= hold + inhale) {
+    text('Hold', 0, 0);
+  } else {
+    text('Exhale', 0, 0);
+  }
+  pop();
+}
+
+function drawSliderValue(val) {
+  push();
+  fill(255);
+  textSize(12);
+  text(val, 130, 23.5);
+  pop();
+}
+
+function drawInner(step, full, val) {
+  let mstep = map(step, 0, full, 0, 360); 
   stroke(150,150,150);
   strokeWeight(5);
-  arc(0, 0, 200, 200, mstep-(50/val), mstep);
-  
-  rotate(90);
-  noStroke();
-  fill(255);
-  if (step <= inhale) {
-    text('Inhale', -14, 0);
-  } else if (step > inhale && step <= hold + inhale) {
-    text('Hold', -12, 0);
-  } else {
-    text('Exhale', -14, 0);
-  }
+  arc(0, 0, 200, 200, mstep-(50/val), mstep);	
+}
+
+function drawOuterCirkel() {
+  // ratio 1, 3, 2
+  let mi = 60, mh = 180, me = 120;
+
+  strokeWeight(10);  
+
+  // Yellow
+  stroke(255,179,0);
+  arc(0, 0, 220, 220, 0, 360);
+  // Green
+  stroke(67,160,71);
+  arc(0, 0, 220, 220, 0, mi + mh);
+  // Blue
+  stroke(30,136,229);
+  arc(0, 0, 220, 220, 0, mi);
+  // Yellow
+  stroke(255,179,0);
+  arc(0, 0, 220, 220, 359, 360);
 }
 
 function windowResized() {
