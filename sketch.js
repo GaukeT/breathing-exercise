@@ -1,4 +1,5 @@
 let slider;
+let button;
 let step = 0
 
 function setup() {
@@ -6,10 +7,8 @@ function setup() {
   angleMode(DEGREES);
   frameRate(1);
   
-  // createSlider(min, max, default);
-  slider = createSlider(2, 8, 4);
-  slider.position(20, 10);
-  slider.style('width', '100px');
+  setupSlider();
+  setupButton();
 }
 
 function draw() {
@@ -70,3 +69,28 @@ function draw() {
   }
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  button.position(20, windowHeight-40);
+}
+
+function setupSlider() {
+  // createSlider(min, max, default);
+  slider = createSlider(2, 8, 4);
+  slider.position(20, 10);
+  slider.style('width', '100px');
+}
+
+function setupButton() {
+  button = createButton('reset');
+  button.position(20, windowHeight-40);
+  button.mousePressed(resetSteps);
+  button.style('border', 'none');
+  button.style('padding', '6px 10px');
+  button.style('border-radius', '6px');
+  button.style('transition-duration', '0.4s');		
+}
+
+function resetSteps() {
+  step = -0;
+}
