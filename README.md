@@ -3,4 +3,4 @@
 
 -> [LIVE DEMO](https://gauket.github.io/breathing-exercise/)
 
-![alt text](./resources/example.png)
+![alt text](./resources/screenshot.png)
