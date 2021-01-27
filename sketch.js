@@ -2,7 +2,7 @@ let slider;
 let step = 0
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(800, 800);
   angleMode(DEGREES);
   frameRate(1);
   
